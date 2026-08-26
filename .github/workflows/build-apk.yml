@@ -1,4 +1,4 @@
-name: Build Android Demo APK
+name: Build and Release Android APK
 
 on:
   push:
@@ -9,8 +9,10 @@ on:
 
 jobs:
   build:
-    name: Build Debug APK
+    name: Build & Release Debug APK
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout Code
@@ -30,9 +32,44 @@ jobs:
       - name: Build Debug APK
         run: gradle assembleDebug --no-daemon
 
+      - name: Prepare APK Asset
+        run: |
+          cp app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/contact-vip-debug.apk
+
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: contact-vip-debug-apk
-          path: app/build/outputs/apk/debug/*.apk
+          path: app/build/outputs/apk/debug/contact-vip-debug.apk
           retention-days: 7
+
+      - name: Delete Existing Dev Release & Tag
+        if: github.event_name != 'pull_request'
+        run: |
+          gh release delete dev --cleanup-tag -y 2>/dev/null || true
+          git push --delete origin dev 2>/dev/null || true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Release to Rolling Tag (dev)
+        if: github.event_name != 'pull_request'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: dev
+          target_commitish: ${{ github.sha }}
+          name: "Contacts VIP (Dev Build)"
+          body: |
+            ### 🚀 Contacts VIP - Development Build (Rolling Release)
+
+            Bản build tự động mới nhất từ GitHub Actions.
+
+            - **Branch:** `${{ github.ref_name }}`
+            - **Commit:** `${{ github.sha }}`
+            - **Triggered by:** `${{ github.actor }}`
+          prerelease: true
+          make_latest: false
+          files: |
+            app/build/outputs/apk/debug/contact-vip-debug.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
