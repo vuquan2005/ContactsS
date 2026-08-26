@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Phone &amp; Contacts</string>
+    <string name="app_name">Contacts VIP</string>
     <string name="title_favorites">Favorites</string>
     <string name="title_recents">Recents</string>
     <string name="title_contacts">Contacts</string>
@@ -61,7 +61,7 @@
     <string name="lang_vietnamese">Tiếng Việt</string>
     <string name="lang_english">English</string>
     <string name="about">About</string>
-    <string name="app_title_about">ContactVIP</string>
+    <string name="app_title_about">Contacts VIP</string>
     <string name="version_name">Version 1.0.0</string>
 
     <!-- Add/Edit & Detail Sections -->

@@ -22,6 +22,6 @@ dependencyResolutionManagement {
   }
 }
 
-rootProject.name = "ContactVIP"
+rootProject.name = "Contacts VIP"
 
 include(":app")

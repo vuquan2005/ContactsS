@@ -1,6 +1,6 @@
 {
-  "name": "Phone & Contacts",
-  "description": "ContactVIP - Smart Contacts, Dialer, Favorites, and Call History app",
+  "name": "Contacts VIP",
+  "description": "Contacts VIP - Smart Contacts, Dialer, Favorites, and Call History app",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
