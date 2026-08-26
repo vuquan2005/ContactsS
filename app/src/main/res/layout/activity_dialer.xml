@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:navigationContentDescription="Back"
+        app:title="@string/dialer"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Dialed Number Area -->
+    <TextView
+        android:id="@+id/tv_dialed_number"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:maxLines="2"
+        android:textColor="?attr/colorOnSurface"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        tools:text="0987654321" />
+
+    <TextView
+        android:id="@+id/tv_contact_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:textColor="?attr/colorPrimary"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_dialed_number"
+        tools:text="John Doe" />
+
+    <!-- Dial Pad Grid -->
+    <GridLayout
+        android:id="@+id/dial_pad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:columnCount="3"
+        android:rowCount="4"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toTopOf="@id/btn_call"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_contact_name"
+        app:layout_constraintVertical_bias="0.4">
+
+        <com.google.android.material.button.MaterialButton style="@style/DialerButton" android:text="1" />
+        <com.google.android.material.button.MaterialButton style="@style/DialerButton" android:text="2" />
+        <com.google.android.material.button.MaterialButton style="@style/DialerButton" android:text="3" />
+        <com.google.android.material.button.MaterialButton style="@style/DialerButton" android:text="4" />
+        <com.google.android.material.button.MaterialButton style="@style/DialerButton" android:text="5" />
+        <com.google.android.material.button.MaterialButton style="@style/DialerButton" android:text="6" />
+        <com.google.android.material.button.MaterialButton style="@style/DialerButton" android:text="7" />
+        <com.google.android.material.button.MaterialButton style="@style/DialerButton" android:text="8" />
+        <com.google.android.material.button.MaterialButton style="@style/DialerButton" android:text="9" />
+        <com.google.android.material.button.MaterialButton style="@style/DialerButton" android:text="*" />
+        <com.google.android.material.button.MaterialButton style="@style/DialerButton" android:text="0" />
+        <com.google.android.material.button.MaterialButton style="@style/DialerButton" android:text="#" />
+    </GridLayout>
+
+    <!-- Call FAB -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_call"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:contentDescription="@string/call"
+        app:backgroundTint="@color/green_call"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_call"
+        app:tint="@android:color/white" />
+
+    <!-- Backspace / Delete Button -->
+    <ImageButton
+        android:id="@+id/btn_delete"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="24dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Delete"
+        android:src="@drawable/ic_backspace"
+        app:tint="?attr/colorOnSurface"
+        app:layout_constraintBottom_toBottomOf="@id/btn_call"
+        app:layout_constraintStart_toEndOf="@id/btn_call"
+        app:layout_constraintTop_toTopOf="@id/btn_call" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
