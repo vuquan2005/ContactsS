@@ -54,15 +54,11 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
 
-        // Default FAB action
-        binding.fabDialer.setOnClickListener(v -> {
-            Intent intent = new Intent(this, DialerActivity.class);
-            startActivity(intent);
-        });
-
         // Set default fragment
         if (savedInstanceState == null) {
             binding.bottomNavigation.setSelectedItemId(R.id.navigation_contacts);
+        } else {
+            updateFab(binding.bottomNavigation.getSelectedItemId());
         }
 
         // Request Phone Call, Call Log and Contacts permissions
@@ -114,12 +110,14 @@ public class MainActivity extends AppCompatActivity {
     private void updateFab(int itemId) {
         if (itemId == R.id.navigation_contacts) {
             binding.fabDialer.setImageResource(R.drawable.ic_add);
+            binding.fabDialer.setContentDescription(getString(R.string.btn_add_contact));
             binding.fabDialer.setOnClickListener(v -> {
                 Intent intent = new Intent(this, AddEditContactActivity.class);
                 startActivity(intent);
             });
         } else {
             binding.fabDialer.setImageResource(R.drawable.ic_dialer);
+            binding.fabDialer.setContentDescription(getString(R.string.dialer));
             binding.fabDialer.setOnClickListener(v -> {
                 Intent intent = new Intent(this, DialerActivity.class);
                 startActivity(intent);
