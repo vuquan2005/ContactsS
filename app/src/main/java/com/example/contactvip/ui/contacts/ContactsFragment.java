@@ -55,14 +55,22 @@ public class ContactsFragment extends Fragment implements ContactAdapter.OnConta
         });
 
         binding.btnAddContact.setOnClickListener(v -> {
+            binding.searchView.clearFocus();
             Intent intent = new Intent(getContext(), AddEditContactActivity.class);
             startActivity(intent);
         });
 
-        binding.btnSort.setOnClickListener(this::showSortMenu);
-        binding.btnFilter.setOnClickListener(this::showFilterMenu);
+        binding.btnSort.setOnClickListener(v -> {
+            binding.searchView.clearFocus();
+            showSortMenu(v);
+        });
+        binding.btnFilter.setOnClickListener(v -> {
+            binding.searchView.clearFocus();
+            showFilterMenu(v);
+        });
 
         binding.alphabetIndex.setOnIndexSelectedListener(letter -> {
+            binding.searchView.clearFocus();
             int position = adapter.getPositionForSection(letter);
             if (position != -1) {
                 ((LinearLayoutManager) binding.recyclerViewContacts.getLayoutManager()).scrollToPositionWithOffset(position, 0);
@@ -72,7 +80,8 @@ public class ContactsFragment extends Fragment implements ContactAdapter.OnConta
         binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                return false;
+                binding.searchView.clearFocus();
+                return true;
             }
 
             @Override
@@ -85,6 +94,9 @@ public class ContactsFragment extends Fragment implements ContactAdapter.OnConta
 
     @Override
     public void onContactClick(Contact contact) {
+        if (binding != null) {
+            binding.searchView.clearFocus();
+        }
         Intent intent = new Intent(getContext(), ContactDetailActivity.class);
         intent.putExtra("CONTACT_ID", contact.id);
         startActivity(intent);

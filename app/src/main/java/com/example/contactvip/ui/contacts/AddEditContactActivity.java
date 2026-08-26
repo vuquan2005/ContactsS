@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
@@ -61,7 +63,10 @@ public class AddEditContactActivity extends AppCompatActivity {
         binding = ActivityAddEditContactBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.toolbar.setNavigationOnClickListener(v -> finish());
+        binding.toolbar.setNavigationOnClickListener(v -> {
+            hideKeyboard();
+            finish();
+        });
 
         viewModel = new ViewModelProvider(this).get(ContactViewModel.class);
 
@@ -263,9 +268,20 @@ public class AddEditContactActivity extends AppCompatActivity {
             }
 
             runOnUiThread(() -> {
+                hideKeyboard();
                 Toast.makeText(this, "Contact saved", Toast.LENGTH_SHORT).show();
                 finish();
             });
         }).start();
+    }
+
+    private void hideKeyboard() {
+        View view = getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            if (imm != null) {
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
+        }
     }
 }

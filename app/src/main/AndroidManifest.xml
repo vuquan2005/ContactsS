@@ -31,9 +31,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.dialer.DialerActivity" />
+        <activity
+            android:name=".ui.dialer.DialerActivity"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity android:name=".ui.call.CallActivity" />
-        <activity android:name=".ui.contacts.AddEditContactActivity" />
+        <activity
+            android:name=".ui.contacts.AddEditContactActivity"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.contacts.ContactDetailActivity" />
         <activity android:name=".ui.settings.SettingsActivity" />
     </application>
