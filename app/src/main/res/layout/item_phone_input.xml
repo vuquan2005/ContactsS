@@ -8,7 +8,7 @@
     android:layout_marginBottom="8dp">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="110dp"
+        android:layout_width="135dp"
         android:layout_height="wrap_content"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
@@ -17,8 +17,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="none"
-            android:paddingHorizontal="12dp"
-            android:textSize="14sp"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:paddingStart="12dp"
+            android:paddingEnd="4dp"
+            android:textSize="13.5sp"
             android:text="Mobile" />
     </com.google.android.material.textfield.TextInputLayout>
 

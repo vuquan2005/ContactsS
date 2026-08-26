@@ -4,6 +4,8 @@
     <string name="title_favorites">Yêu thích</string>
     <string name="title_recents">Gần đây</string>
     <string name="title_contacts">Danh bạ</string>
+    <string name="section_favorites">Yêu thích</string>
+    <string name="section_all_contacts">Tất cả liên hệ</string>
     <string name="search_hint">Tìm kiếm danh bạ...</string>
     <string name="no_contacts">Không có liên hệ</string>
     <string name="add_contact_desc">Thêm liên hệ đầu tiên của bạn để bắt đầu.</string>

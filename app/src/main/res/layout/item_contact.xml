@@ -55,7 +55,7 @@
                     android:layout_height="16dp"
                     android:layout_marginStart="6dp"
                     android:src="@drawable/ic_star"
-                    app:tint="@color/primary_light"
+                    app:tint="@color/favorite_star"
                     android:visibility="gone"
                     android:contentDescription="Favorite" />
             </LinearLayout>

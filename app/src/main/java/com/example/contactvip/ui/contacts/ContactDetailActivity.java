@@ -171,10 +171,14 @@ public class ContactDetailActivity extends AppCompatActivity {
         // Favorite Button UI
         if (contact.isFavorite) {
             binding.btnFavorite.setIconResource(R.drawable.ic_star);
-            binding.btnFavorite.setIconTintResource(R.color.primary_light);
+            binding.btnFavorite.setIconTintResource(R.color.favorite_star);
         } else {
             binding.btnFavorite.setIconResource(R.drawable.ic_star_border);
-            binding.btnFavorite.setIconTint(null);
+            if (binding.btnMessage.getIconTint() != null) {
+                binding.btnFavorite.setIconTint(binding.btnMessage.getIconTint());
+            } else {
+                binding.btnFavorite.setIconTintResource(R.color.primary_light);
+            }
         }
     }
 

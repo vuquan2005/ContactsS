@@ -5,6 +5,7 @@
     <color name="green_call">#4CAF50</color>
     <color name="red_end_call">#F44336</color>
     <color name="blue_action">#1976D2</color>
+    <color name="favorite_star">#FFB800</color>
 
     <!-- Light Theme Colors -->
     <color name="primary_light">#1A73E8</color>

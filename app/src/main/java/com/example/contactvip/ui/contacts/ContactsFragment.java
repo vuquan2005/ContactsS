@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
 
+import java.util.List;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
@@ -16,16 +18,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.contactvip.R;
 import com.example.contactvip.adapter.ContactAdapter;
+import com.example.contactvip.adapter.FavoriteContactAdapter;
 import com.example.contactvip.data.entity.Contact;
 import com.example.contactvip.data.entity.ContactDisplay;
 import com.example.contactvip.data.entity.ContactGroup;
 import com.example.contactvip.databinding.FragmentContactsBinding;
 import com.example.contactvip.viewmodel.ContactViewModel;
 
-public class ContactsFragment extends Fragment implements ContactAdapter.OnContactClickListener {
+public class ContactsFragment extends Fragment implements ContactAdapter.OnContactClickListener, FavoriteContactAdapter.OnFavoriteClickListener {
     private FragmentContactsBinding binding;
     private ContactViewModel viewModel;
     private ContactAdapter adapter;
+    private FavoriteContactAdapter favoriteAdapter;
 
     @Nullable
     @Override
@@ -39,9 +43,15 @@ public class ContactsFragment extends Fragment implements ContactAdapter.OnConta
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(requireActivity()).get(ContactViewModel.class);
         
+        // Setup Main Contacts RecyclerView
         adapter = new ContactAdapter(this);
         binding.recyclerViewContacts.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.recyclerViewContacts.setAdapter(adapter);
+
+        // Setup Favorites Section RecyclerView
+        favoriteAdapter = new FavoriteContactAdapter(this);
+        binding.recyclerViewFavorites.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        binding.recyclerViewFavorites.setAdapter(favoriteAdapter);
         
         viewModel.getAllContacts().observe(getViewLifecycleOwner(), contacts -> {
             if (contacts == null || contacts.isEmpty()) {
@@ -52,6 +62,11 @@ public class ContactsFragment extends Fragment implements ContactAdapter.OnConta
                 binding.recyclerViewContacts.setVisibility(View.VISIBLE);
                 adapter.submitList(contacts);
             }
+        });
+
+        // Observe Favorites to display at the top of Contacts
+        viewModel.getFavoriteContacts().observe(getViewLifecycleOwner(), favorites -> {
+            updateFavoritesSection(favorites);
         });
 
         binding.btnAddContact.setOnClickListener(v -> {
@@ -87,6 +102,11 @@ public class ContactsFragment extends Fragment implements ContactAdapter.OnConta
             @Override
             public boolean onQueryTextChange(String newText) {
                 viewModel.setSearchQuery(newText);
+                if (newText != null && !newText.trim().isEmpty()) {
+                    binding.layoutFavoritesSection.setVisibility(View.GONE);
+                } else {
+                    updateFavoritesSection(viewModel.getFavoriteContacts().getValue());
+                }
                 return true;
             }
         });
@@ -94,6 +114,16 @@ public class ContactsFragment extends Fragment implements ContactAdapter.OnConta
 
     @Override
     public void onContactClick(Contact contact) {
+        if (binding != null) {
+            binding.searchView.clearFocus();
+        }
+        Intent intent = new Intent(getContext(), ContactDetailActivity.class);
+        intent.putExtra("CONTACT_ID", contact.id);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onFavoriteClick(Contact contact) {
         if (binding != null) {
             binding.searchView.clearFocus();
         }
@@ -121,6 +151,16 @@ public class ContactsFragment extends Fragment implements ContactAdapter.OnConta
         popup.show();
     }
 
+    private void updateFavoritesSection(List<ContactDisplay> favorites) {
+        if (binding == null) return;
+        if (favorites != null && !favorites.isEmpty() && viewModel.getFilterMode() == ContactViewModel.FilterMode.ALL) {
+            binding.layoutFavoritesSection.setVisibility(View.VISIBLE);
+            favoriteAdapter.submitList(favorites);
+        } else {
+            binding.layoutFavoritesSection.setVisibility(View.GONE);
+        }
+    }
+
     private void showFilterMenu(View v) {
         PopupMenu popup = new PopupMenu(getContext(), v);
         popup.getMenu().add(0, -1, 0, getString(R.string.filter_all)).setCheckable(true).setChecked(viewModel.getFilterMode() == ContactViewModel.FilterMode.ALL);
@@ -140,6 +180,7 @@ public class ContactsFragment extends Fragment implements ContactAdapter.OnConta
             if (item.getItemId() == -1) viewModel.setFilterMode(ContactViewModel.FilterMode.ALL, -1);
             else if (item.getItemId() == -2) viewModel.setFilterMode(ContactViewModel.FilterMode.FAVORITES, -1);
             else viewModel.setFilterMode(ContactViewModel.FilterMode.GROUP, item.getItemId());
+            updateFavoritesSection(viewModel.getFavoriteContacts().getValue());
             return true;
         });
         popup.show();

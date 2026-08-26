@@ -17,7 +17,6 @@ import com.example.contactvip.databinding.ActivityMainBinding;
 import com.example.contactvip.ui.contacts.AddEditContactActivity;
 import com.example.contactvip.ui.contacts.ContactsFragment;
 import com.example.contactvip.ui.dialer.DialerActivity;
-import com.example.contactvip.ui.favorites.FavoritesFragment;
 import com.example.contactvip.ui.recents.RecentsFragment;
 import com.example.contactvip.ui.settings.SettingsActivity;
 
@@ -37,15 +36,12 @@ public class MainActivity extends AppCompatActivity {
             String title = "";
             int itemId = item.getItemId();
 
-            if (itemId == R.id.navigation_favorites) {
-                selectedFragment = new FavoritesFragment();
-                title = getString(R.string.title_favorites);
+            if (itemId == R.id.navigation_contacts) {
+                selectedFragment = new ContactsFragment();
+                title = getString(R.string.title_contacts);
             } else if (itemId == R.id.navigation_recents) {
                 selectedFragment = new RecentsFragment();
                 title = getString(R.string.title_recents);
-            } else if (itemId == R.id.navigation_contacts) {
-                selectedFragment = new ContactsFragment();
-                title = getString(R.string.title_contacts);
             }
 
             if (selectedFragment != null) {
