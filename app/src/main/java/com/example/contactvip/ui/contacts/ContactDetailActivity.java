@@ -191,7 +191,12 @@ public class ContactDetailActivity extends AppCompatActivity {
 
             for (ContactPhone phone : currentPhones) {
                 ItemPhoneDetailBinding pb = ItemPhoneDetailBinding.inflate(LayoutInflater.from(this), binding.phonesContainer, false);
-                pb.tvLabel.setText(phone.label != null && !phone.label.isEmpty() ? phone.label : "Phone");
+                if (phone.label != null && !phone.label.isEmpty() && !phone.label.equalsIgnoreCase("Mobile") && !phone.label.equalsIgnoreCase("Phone")) {
+                    pb.tvLabel.setText(phone.label);
+                    pb.tvLabel.setVisibility(View.VISIBLE);
+                } else {
+                    pb.tvLabel.setVisibility(View.GONE);
+                }
                 pb.tvPhone.setText(phone.phoneNumber);
                 pb.btnCall.setOnClickListener(v -> startCall(phone.phoneNumber));
                 pb.getRoot().setOnClickListener(v -> startCall(phone.phoneNumber));

@@ -8,29 +8,9 @@
     android:layout_marginBottom="8dp">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="135dp"
-        android:layout_height="wrap_content"
-        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
-
-        <AutoCompleteTextView
-            android:id="@+id/spinner_label"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="none"
-            android:singleLine="true"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:paddingStart="12dp"
-            android:paddingEnd="4dp"
-            android:textSize="13.5sp"
-            android:text="Mobile" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_marginStart="8dp"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         app:startIconDrawable="@drawable/ic_call"
         android:hint="@string/phone">

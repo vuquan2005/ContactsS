@@ -89,7 +89,7 @@ public class AddEditContactActivity extends AppCompatActivity {
                 }
             });
         } else {
-            addPhoneField("", "Mobile", true);
+            addPhoneField("", true);
         }
 
         viewModel.getAllGroups().observe(this, this::updateGroupChips);
@@ -99,26 +99,14 @@ public class AddEditContactActivity extends AppCompatActivity {
                 .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
                 .build())
         );
-        binding.btnAddPhone.setOnClickListener(v -> addPhoneField("", "Mobile", false));
+        binding.btnAddPhone.setOnClickListener(v -> addPhoneField("", false));
         binding.btnCreateGroup.setOnClickListener(v -> showCreateGroupDialog());
         binding.btnSave.setOnClickListener(v -> saveContact());
     }
 
-    private void addPhoneField(String number, String label, boolean isPrimary) {
+    private void addPhoneField(String number, boolean isPrimary) {
         ItemPhoneInputBinding phoneBinding = ItemPhoneInputBinding.inflate(LayoutInflater.from(this), binding.phonesContainer, false);
         phoneBinding.etPhone.setText(number);
-        
-        String defaultMobile = getString(R.string.label_mobile);
-        phoneBinding.spinnerLabel.setText(label != null && !label.isEmpty() ? label : defaultMobile, false);
-        
-        String[] labels = {
-                getString(R.string.label_mobile),
-                getString(R.string.label_home),
-                getString(R.string.label_work),
-                getString(R.string.label_other)
-        };
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, labels);
-        phoneBinding.spinnerLabel.setAdapter(adapter);
 
         phoneBinding.btnRemove.setOnClickListener(v -> {
             if (phoneBindings.size() > 1) {
@@ -183,9 +171,9 @@ public class AddEditContactActivity extends AppCompatActivity {
                 binding.phonesContainer.removeAllViews();
                 phoneBindings.clear();
                 if (phones.isEmpty()) {
-                    addPhoneField("", "Mobile", true);
+                    addPhoneField("", true);
                 } else {
-                    for (ContactPhone p : phones) addPhoneField(p.phoneNumber, p.label, p.isPrimary);
+                    for (ContactPhone p : phones) addPhoneField(p.phoneNumber, p.isPrimary);
                 }
             });
         }).start();
@@ -211,9 +199,8 @@ public class AddEditContactActivity extends AppCompatActivity {
         for (int i = 0; i < phoneBindings.size(); i++) {
             ItemPhoneInputBinding pb = phoneBindings.get(i);
             String num = pb.etPhone.getText().toString().trim();
-            String lbl = pb.spinnerLabel.getText().toString();
             if (!num.isEmpty()) {
-                phonesToSave.add(new ContactPhone(0, num, lbl, i == 0));
+                phonesToSave.add(new ContactPhone(0, num, "Mobile", i == 0));
             }
         }
 
