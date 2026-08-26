@@ -453,15 +453,6 @@
                             android:text="@string/no_additional_details"
                             android:textSize="14sp"
                             android:textColor="?android:textColorSecondary" />
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/btn_add_info_empty"
-                            style="@style/Widget.Material3.Button.TextButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="@string/add_details"
-                            app:icon="@drawable/ic_edit" />
                     </LinearLayout>
 
                 </LinearLayout>

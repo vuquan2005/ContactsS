@@ -73,7 +73,6 @@ public class ContactDetailActivity extends AppCompatActivity {
         binding.btnDelete.setOnClickListener(v -> confirmDelete());
 
         binding.btnAddPhoneEmpty.setOnClickListener(v -> editContact());
-        binding.btnAddInfoEmpty.setOnClickListener(v -> editContact());
     }
 
     @Override
