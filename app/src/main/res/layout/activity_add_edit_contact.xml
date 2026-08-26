@@ -13,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="@drawable/ic_arrow_back"
-            app:navigationContentDescription="Back"
+            app:navigationContentDescription="@string/back"
             app:title="@string/new_contact" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -45,7 +45,7 @@
                     app:strokeWidth="2dp"
                     app:strokeColor="?attr/colorOutlineVariant"
                     app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.Rounded"
-                    android:contentDescription="Avatar" />
+                    android:contentDescription="@string/change_photo" />
 
             </FrameLayout>
 
@@ -55,7 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Change photo"
+                android:text="@string/change_photo"
                 android:textSize="13sp"
                 app:icon="@drawable/ic_edit"
                 app:iconSize="16dp" />
@@ -66,7 +66,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginStart="4dp"
-                android:text="Basic Information"
+                android:text="@string/basic_info"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:textColor="?attr/colorPrimary" />
@@ -92,7 +92,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:startIconDrawable="@drawable/ic_person"
-                        android:hint="Full Name *">
+                        android:hint="@string/full_name">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_name"
@@ -111,7 +111,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginStart="4dp"
-                android:text="Phone Numbers"
+                android:text="@string/phone_numbers"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:textColor="?attr/colorPrimary" />
@@ -144,7 +144,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:layout_marginTop="4dp"
-                        android:text="Add phone number"
+                        android:text="@string/add_phone_number"
                         app:icon="@drawable/ic_add" />
 
                 </LinearLayout>
@@ -156,7 +156,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginStart="4dp"
-                android:text="Contact &amp; Work Details"
+                android:text="@string/contact_work_details"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:textColor="?attr/colorPrimary" />
@@ -266,7 +266,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginStart="4dp"
-                android:text="Groups"
+                android:text="@string/groups"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:textColor="?attr/colorPrimary" />
@@ -299,7 +299,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:layout_marginTop="4dp"
-                        android:text="Create Group"
+                        android:text="@string/create_group"
                         app:icon="@drawable/ic_add" />
 
                 </LinearLayout>

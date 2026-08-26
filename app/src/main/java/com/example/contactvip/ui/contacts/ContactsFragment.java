@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.contactvip.R;
 import com.example.contactvip.adapter.ContactAdapter;
 import com.example.contactvip.data.entity.Contact;
 import com.example.contactvip.data.entity.ContactDisplay;
@@ -104,10 +105,10 @@ public class ContactsFragment extends Fragment implements ContactAdapter.OnConta
 
     private void showSortMenu(View v) {
         PopupMenu popup = new PopupMenu(getContext(), v);
-        popup.getMenu().add(0, 0, 0, "Name A-Z").setCheckable(true).setChecked(viewModel.getSortMode() == ContactViewModel.SortMode.NAME_ASC);
-        popup.getMenu().add(0, 1, 1, "Name Z-A").setCheckable(true).setChecked(viewModel.getSortMode() == ContactViewModel.SortMode.NAME_DESC);
-        popup.getMenu().add(0, 2, 2, "Recently Added").setCheckable(true).setChecked(viewModel.getSortMode() == ContactViewModel.SortMode.RECENTLY_ADDED);
-        popup.getMenu().add(0, 3, 3, "Oldest Added").setCheckable(true).setChecked(viewModel.getSortMode() == ContactViewModel.SortMode.OLDEST_ADDED);
+        popup.getMenu().add(0, 0, 0, getString(R.string.sort_name_asc)).setCheckable(true).setChecked(viewModel.getSortMode() == ContactViewModel.SortMode.NAME_ASC);
+        popup.getMenu().add(0, 1, 1, getString(R.string.sort_name_desc)).setCheckable(true).setChecked(viewModel.getSortMode() == ContactViewModel.SortMode.NAME_DESC);
+        popup.getMenu().add(0, 2, 2, getString(R.string.sort_recently_added)).setCheckable(true).setChecked(viewModel.getSortMode() == ContactViewModel.SortMode.RECENTLY_ADDED);
+        popup.getMenu().add(0, 3, 3, getString(R.string.sort_oldest_added)).setCheckable(true).setChecked(viewModel.getSortMode() == ContactViewModel.SortMode.OLDEST_ADDED);
 
         popup.setOnMenuItemClickListener(item -> {
             switch (item.getItemId()) {
@@ -123,8 +124,8 @@ public class ContactsFragment extends Fragment implements ContactAdapter.OnConta
 
     private void showFilterMenu(View v) {
         PopupMenu popup = new PopupMenu(getContext(), v);
-        popup.getMenu().add(0, -1, 0, "All Contacts").setCheckable(true).setChecked(viewModel.getFilterMode() == ContactViewModel.FilterMode.ALL);
-        popup.getMenu().add(0, -2, 1, "Favorites").setCheckable(true).setChecked(viewModel.getFilterMode() == ContactViewModel.FilterMode.FAVORITES);
+        popup.getMenu().add(0, -1, 0, getString(R.string.filter_all)).setCheckable(true).setChecked(viewModel.getFilterMode() == ContactViewModel.FilterMode.ALL);
+        popup.getMenu().add(0, -2, 1, getString(R.string.title_favorites)).setCheckable(true).setChecked(viewModel.getFilterMode() == ContactViewModel.FilterMode.FAVORITES);
 
         viewModel.getAllGroups().observe(getViewLifecycleOwner(), groups -> {
             if (groups != null) {

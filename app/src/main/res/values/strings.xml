@@ -13,8 +13,10 @@
     <string name="recent_calls_desc">Your recent calls will appear here.</string>
     <string name="new_contact">New Contact</string>
     <string name="edit_contact">Edit Contact</string>
+    <string name="contact_details">Contact Details</string>
     <string name="first_name">First name</string>
     <string name="last_name">Last name</string>
+    <string name="full_name">Full Name *</string>
     <string name="phone">Phone</string>
     <string name="email">Email</string>
     <string name="company">Company</string>
@@ -22,14 +24,17 @@
     <string name="address">Address</string>
     <string name="notes">Notes</string>
     <string name="save_contact">Save Contact</string>
-    <string name="delete_contact_title">Delete Contact?</string>
+    <string name="delete_contact_title">Delete Contact</string>
     <string name="delete_contact_message">Are you sure you want to delete %1$s?</string>
     <string name="cancel">Cancel</string>
     <string name="delete">Delete</string>
+    <string name="create">Create</string>
     <string name="contact_deleted">Contact deleted</string>
+    <string name="contact_saved">Contact saved</string>
     <string name="call">Call</string>
     <string name="message">Message</string>
     <string name="favorite">Favorite</string>
+    <string name="share">Share</string>
     <string name="dialer">Dialer</string>
     <string name="calling">Calling...</string>
     <string name="connecting">Connecting...</string>
@@ -39,5 +44,61 @@
     <string name="outgoing_call">Outgoing call</string>
     <string name="missed_call">Missed call</string>
     <string name="no_sms_app">No messaging app available.</string>
+    <string name="no_phone_available">No phone number available for this contact</string>
+    <string name="no_phone_messaging">No phone number available for messaging</string>
+    <string name="at_least_one_phone">At least one phone number is required</string>
+    <string name="enter_contact_name">Please enter contact name</string>
     <string name="action_settings">Settings</string>
+
+    <!-- Settings & Appearance -->
+    <string name="appearance">Appearance</string>
+    <string name="theme_system">System Default</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="language">Language</string>
+    <string name="lang_vietnamese">Tiếng Việt</string>
+    <string name="lang_english">English</string>
+    <string name="about">About</string>
+    <string name="app_title_about">ContactVIP</string>
+    <string name="version_name">Version 1.0.0</string>
+
+    <!-- Add/Edit & Detail Sections -->
+    <string name="change_photo">Change photo</string>
+    <string name="basic_info">Basic Information</string>
+    <string name="phone_numbers">Phone Numbers</string>
+    <string name="add_phone_number">Add phone number</string>
+    <string name="contact_work_details">Contact &amp; Work Details</string>
+    <string name="groups">Groups</string>
+    <string name="create_group">Create Group</string>
+    <string name="new_group">New Group</string>
+    <string name="group_name">Group Name</string>
+    <string name="information">Information</string>
+    <string name="job_and_company">Job &amp; Company</string>
+    <string name="no_phone_numbers_added">No phone numbers added</string>
+    <string name="no_additional_details">No additional details provided</string>
+    <string name="add_details">Add Details</string>
+    <string name="unnamed_contact">Unnamed Contact</string>
+
+    <!-- Sort & Filter -->
+    <string name="sort_name_asc">Name A-Z</string>
+    <string name="sort_name_desc">Name Z-A</string>
+    <string name="sort_recently_added">Recently Added</string>
+    <string name="sort_oldest_added">Oldest Added</string>
+    <string name="filter_all">All Contacts</string>
+
+    <!-- Phone Labels -->
+    <string name="label_mobile">Mobile</string>
+    <string name="label_home">Home</string>
+    <string name="label_work">Work</string>
+    <string name="label_other">Other</string>
+
+    <!-- Call Controls -->
+    <string name="mute">Mute</string>
+    <string name="keypad">Keypad</string>
+    <string name="speaker">Speaker</string>
+    <string name="end_call">End Call</string>
+    <string name="call_history_deleted">Call history deleted</string>
+    <string name="undo">Undo</string>
+    <string name="back">Back</string>
 </resources>
+

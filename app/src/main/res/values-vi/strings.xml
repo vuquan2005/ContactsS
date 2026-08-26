@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Điện thoại &amp; Danh bạ</string>
+    <string name="title_favorites">Yêu thích</string>
+    <string name="title_recents">Gần đây</string>
+    <string name="title_contacts">Danh bạ</string>
+    <string name="search_hint">Tìm kiếm danh bạ...</string>
+    <string name="no_contacts">Không có liên hệ</string>
+    <string name="add_contact_desc">Thêm liên hệ đầu tiên của bạn để bắt đầu.</string>
+    <string name="btn_add_contact">Thêm liên hệ</string>
+    <string name="no_favorites">Chưa có liên hệ yêu thích</string>
+    <string name="add_to_favorites_desc">Thêm liên hệ vào mục Yêu thích để truy cập nhanh chóng.</string>
+    <string name="no_recent_calls">Không có cuộc gọi gần đây</string>
+    <string name="recent_calls_desc">Các cuộc gọi gần đây của bạn sẽ xuất hiện tại đây.</string>
+    <string name="new_contact">Liên hệ mới</string>
+    <string name="edit_contact">Chỉnh sửa liên hệ</string>
+    <string name="contact_details">Chi tiết liên hệ</string>
+    <string name="first_name">Tên</string>
+    <string name="last_name">Họ</string>
+    <string name="full_name">Họ và tên *</string>
+    <string name="phone">Số điện thoại</string>
+    <string name="email">Email</string>
+    <string name="company">Công ty</string>
+    <string name="job_title">Chức vụ</string>
+    <string name="address">Địa chỉ</string>
+    <string name="notes">Ghi chú</string>
+    <string name="save_contact">Lưu liên hệ</string>
+    <string name="delete_contact_title">Xóa liên hệ</string>
+    <string name="delete_contact_message">Bạn có chắc chắn muốn xóa %1$s không?</string>
+    <string name="cancel">Hủy</string>
+    <string name="delete">Xóa</string>
+    <string name="create">Tạo</string>
+    <string name="contact_deleted">Đã xóa liên hệ</string>
+    <string name="contact_saved">Đã lưu liên hệ</string>
+    <string name="call">Gọi điện</string>
+    <string name="message">Nhắn tin</string>
+    <string name="favorite">Yêu thích</string>
+    <string name="share">Chia sẻ</string>
+    <string name="dialer">Bàn phím</string>
+    <string name="calling">Đang gọi...</string>
+    <string name="connecting">Đang kết nối...</string>
+    <string name="connected">Đã kết nối</string>
+    <string name="call_ended">Cuộc gọi đã kết thúc</string>
+    <string name="incoming_call">Cuộc gọi đến</string>
+    <string name="outgoing_call">Cuộc gọi đi</string>
+    <string name="missed_call">Cuộc gọi nhỡ</string>
+    <string name="no_sms_app">Không có ứng dụng tin nhắn khả dụng.</string>
+    <string name="no_phone_available">Liên hệ này không có số điện thoại khả dụng</string>
+    <string name="no_phone_messaging">Không có số điện thoại để nhắn tin</string>
+    <string name="at_least_one_phone">Cần ít nhất một số điện thoại</string>
+    <string name="enter_contact_name">Vui lòng nhập tên liên hệ</string>
+    <string name="action_settings">Cài đặt</string>
+
+    <!-- Settings & Appearance -->
+    <string name="appearance">Giao diện</string>
+    <string name="theme_system">Mặc định hệ thống</string>
+    <string name="theme_light">Sáng</string>
+    <string name="theme_dark">Tối</string>
+    <string name="language">Ngôn ngữ</string>
+    <string name="lang_vietnamese">Tiếng Việt</string>
+    <string name="lang_english">English</string>
+    <string name="about">Thông tin</string>
+    <string name="app_title_about">ContactVIP</string>
+    <string name="version_name">Phiên bản 1.0.0</string>
+
+    <!-- Add/Edit & Detail Sections -->
+    <string name="change_photo">Đổi ảnh</string>
+    <string name="basic_info">Thông tin cơ bản</string>
+    <string name="phone_numbers">Số điện thoại</string>
+    <string name="add_phone_number">Thêm số điện thoại</string>
+    <string name="contact_work_details">Thông tin liên lạc &amp; Công việc</string>
+    <string name="groups">Nhóm</string>
+    <string name="create_group">Tạo nhóm</string>
+    <string name="new_group">Nhóm mới</string>
+    <string name="group_name">Tên nhóm</string>
+    <string name="information">Thông tin chi tiết</string>
+    <string name="job_and_company">Công việc &amp; Công ty</string>
+    <string name="no_phone_numbers_added">Chưa thêm số điện thoại</string>
+    <string name="no_additional_details">Chưa có thông tin bổ sung</string>
+    <string name="add_details">Thêm thông tin</string>
+    <string name="unnamed_contact">Liên hệ chưa đặt tên</string>
+
+    <!-- Sort & Filter -->
+    <string name="sort_name_asc">Tên A-Z</string>
+    <string name="sort_name_desc">Tên Z-A</string>
+    <string name="sort_recently_added">Mới thêm gần đây</string>
+    <string name="sort_oldest_added">Cũ nhất trước</string>
+    <string name="filter_all">Tất cả liên hệ</string>
+
+    <!-- Phone Labels -->
+    <string name="label_mobile">Di động</string>
+    <string name="label_home">Nhà riêng</string>
+    <string name="label_work">Công việc</string>
+    <string name="label_other">Khác</string>
+
+    <!-- Call Controls -->
+    <string name="mute">Tắt tiếng</string>
+    <string name="keypad">Bàn phím</string>
+    <string name="speaker">Loa ngoài</string>
+    <string name="end_call">Kết thúc</string>
+    <string name="call_history_deleted">Đã xóa nhật ký cuộc gọi</string>
+    <string name="undo">Hoàn tác</string>
+    <string name="back">Quay lại</string>
+</resources>

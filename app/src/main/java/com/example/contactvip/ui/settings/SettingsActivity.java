@@ -19,6 +19,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         binding.toolbar.setNavigationOnClickListener(v -> finish());
 
+        // Setup Theme
         int currentMode = PreferenceUtils.getThemeMode(this);
         if (currentMode == PreferenceUtils.THEME_LIGHT) {
             binding.rbLight.setChecked(true);
@@ -40,5 +41,28 @@ public class SettingsActivity extends AppCompatActivity {
             PreferenceUtils.saveThemeMode(this, mode);
             PreferenceUtils.applyTheme(mode);
         });
+
+        // Setup Language
+        String currentLang = PreferenceUtils.getLanguage(this);
+        if (PreferenceUtils.LANG_VI.equalsIgnoreCase(currentLang)) {
+            binding.rbLangVi.setChecked(true);
+        } else {
+            binding.rbLangEn.setChecked(true);
+        }
+
+        binding.rgLanguage.setOnCheckedChangeListener((group, checkedId) -> {
+            String selectedLang;
+            if (checkedId == R.id.rb_lang_vi) {
+                selectedLang = PreferenceUtils.LANG_VI;
+            } else {
+                selectedLang = PreferenceUtils.LANG_EN;
+            }
+
+            if (!selectedLang.equalsIgnoreCase(PreferenceUtils.getLanguage(this))) {
+                PreferenceUtils.saveLanguage(this, selectedLang);
+                PreferenceUtils.applyLanguage(selectedLang);
+            }
+        });
     }
 }
+

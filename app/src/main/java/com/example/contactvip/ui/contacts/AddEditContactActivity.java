@@ -107,9 +107,16 @@ public class AddEditContactActivity extends AppCompatActivity {
     private void addPhoneField(String number, String label, boolean isPrimary) {
         ItemPhoneInputBinding phoneBinding = ItemPhoneInputBinding.inflate(LayoutInflater.from(this), binding.phonesContainer, false);
         phoneBinding.etPhone.setText(number);
-        phoneBinding.spinnerLabel.setText(label, false);
         
-        String[] labels = {"Mobile", "Home", "Work", "Other"};
+        String defaultMobile = getString(R.string.label_mobile);
+        phoneBinding.spinnerLabel.setText(label != null && !label.isEmpty() ? label : defaultMobile, false);
+        
+        String[] labels = {
+                getString(R.string.label_mobile),
+                getString(R.string.label_home),
+                getString(R.string.label_work),
+                getString(R.string.label_other)
+        };
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, labels);
         phoneBinding.spinnerLabel.setAdapter(adapter);
 
@@ -118,7 +125,7 @@ public class AddEditContactActivity extends AppCompatActivity {
                 binding.phonesContainer.removeView(phoneBinding.getRoot());
                 phoneBindings.remove(phoneBinding);
             } else {
-                Toast.makeText(this, "At least one phone number is required", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.at_least_one_phone, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -145,14 +152,15 @@ public class AddEditContactActivity extends AppCompatActivity {
 
     private void showCreateGroupDialog() {
         TextInputEditText et = new TextInputEditText(this);
+        et.setHint(R.string.group_name);
         new AlertDialog.Builder(this)
-                .setTitle("Create Group")
+                .setTitle(R.string.create_group)
                 .setView(et)
-                .setPositiveButton("Create", (dialog, which) -> {
+                .setPositiveButton(R.string.create, (dialog, which) -> {
                     String name = et.getText().toString().trim();
                     if (!name.isEmpty()) viewModel.insertGroup(new ContactGroup(name));
                 })
-                .setNegativeButton("Cancel", null)
+                .setNegativeButton(R.string.cancel, null)
                 .show();
     }
 
@@ -269,7 +277,7 @@ public class AddEditContactActivity extends AppCompatActivity {
 
             runOnUiThread(() -> {
                 hideKeyboard();
-                Toast.makeText(this, "Contact saved", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.contact_saved, Toast.LENGTH_SHORT).show();
                 finish();
             });
         }).start();

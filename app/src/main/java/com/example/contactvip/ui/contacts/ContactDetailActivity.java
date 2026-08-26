@@ -226,7 +226,7 @@ public class ContactDetailActivity extends AppCompatActivity {
             }
             startCall(primary.phoneNumber);
         } else {
-            Toast.makeText(this, "No phone number available for this contact", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.no_phone_available, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -249,30 +249,30 @@ public class ContactDetailActivity extends AppCompatActivity {
             }
         }
         if (currentContact.email != null && !currentContact.email.trim().isEmpty()) {
-            sb.append("Email: ").append(currentContact.email).append("\n");
+            sb.append(getString(R.string.email)).append(": ").append(currentContact.email).append("\n");
         }
         if (currentContact.company != null && !currentContact.company.trim().isEmpty()) {
-            sb.append("Company: ").append(currentContact.company).append("\n");
+            sb.append(getString(R.string.company)).append(": ").append(currentContact.company).append("\n");
         }
         if (currentContact.jobTitle != null && !currentContact.jobTitle.trim().isEmpty()) {
-            sb.append("Job Title: ").append(currentContact.jobTitle).append("\n");
+            sb.append(getString(R.string.job_title)).append(": ").append(currentContact.jobTitle).append("\n");
         }
         if (currentContact.address != null && !currentContact.address.trim().isEmpty()) {
-            sb.append("Address: ").append(currentContact.address).append("\n");
+            sb.append(getString(R.string.address)).append(": ").append(currentContact.address).append("\n");
         }
         if (currentContact.notes != null && !currentContact.notes.trim().isEmpty()) {
-            sb.append("Notes: ").append(currentContact.notes).append("\n");
+            sb.append(getString(R.string.notes)).append(": ").append(currentContact.notes).append("\n");
         }
 
         Intent sendIntent = new Intent(Intent.ACTION_SEND);
         sendIntent.setType("text/plain");
         sendIntent.putExtra(Intent.EXTRA_TEXT, sb.toString());
-        startActivity(Intent.createChooser(sendIntent, "Share Contact"));
+        startActivity(Intent.createChooser(sendIntent, getString(R.string.share)));
     }
 
     private void startSms() {
         if (currentContact == null || currentPhones == null || currentPhones.isEmpty()) {
-            Toast.makeText(this, "No phone number available for messaging", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.no_phone_messaging, Toast.LENGTH_SHORT).show();
             return;
         }
         try {
@@ -286,7 +286,7 @@ public class ContactDetailActivity extends AppCompatActivity {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + primary.phoneNumber));
             startActivity(intent);
         } catch (Exception e) {
-            Toast.makeText(this, "No SMS app found", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.no_sms_app, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -307,15 +307,16 @@ public class ContactDetailActivity extends AppCompatActivity {
 
     private void confirmDelete() {
         if (currentContact == null) return;
+        String name = currentContact.getFullName();
         new AlertDialog.Builder(this)
-                .setTitle("Delete Contact")
-                .setMessage("Are you sure you want to delete " + currentContact.getFullName() + "?")
-                .setPositiveButton("Delete", (dialog, which) -> {
+                .setTitle(R.string.delete_contact_title)
+                .setMessage(getString(R.string.delete_contact_message, name))
+                .setPositiveButton(R.string.delete, (dialog, which) -> {
                     viewModel.delete(currentContact);
-                    Toast.makeText(this, "Contact deleted", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.contact_deleted, Toast.LENGTH_SHORT).show();
                     finish();
                 })
-                .setNegativeButton("Cancel", null)
+                .setNegativeButton(R.string.cancel, null)
                 .show();
     }
 }

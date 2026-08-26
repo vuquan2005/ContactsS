@@ -14,8 +14,8 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="@drawable/ic_arrow_back"
-            app:navigationContentDescription="Back"
-            app:title="Contact Details" />
+            app:navigationContentDescription="@string/back"
+            app:title="@string/contact_details" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -122,7 +122,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Share"
+                        android:text="@string/share"
                         app:icon="@drawable/ic_share"
                         app:iconGravity="top"
                         android:textSize="12sp" />
@@ -137,7 +137,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="4dp"
-                android:text="Phone Numbers"
+                android:text="@string/phone_numbers"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:textColor="?attr/colorPrimary" />
@@ -177,7 +177,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="No phone numbers added"
+                            android:text="@string/no_phone_numbers_added"
                             android:textSize="14sp"
                             android:textColor="?android:textColorSecondary" />
 
@@ -187,7 +187,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="Add Phone Number"
+                            android:text="@string/add_phone_number"
                             app:icon="@drawable/ic_add" />
                     </LinearLayout>
 
@@ -201,7 +201,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="4dp"
-                android:text="Information"
+                android:text="@string/information"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:textColor="?attr/colorPrimary" />
@@ -237,7 +237,7 @@
                             android:layout_height="22dp"
                             android:src="@drawable/ic_email"
                             app:tint="?attr/colorPrimary"
-                            android:contentDescription="Email" />
+                            android:contentDescription="@string/email" />
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -257,7 +257,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Email"
+                                android:text="@string/email"
                                 android:textSize="12sp"
                                 android:textColor="?android:textColorSecondary" />
                         </LinearLayout>
@@ -278,7 +278,7 @@
                             android:layout_height="22dp"
                             android:src="@drawable/ic_work"
                             app:tint="?attr/colorPrimary"
-                            android:contentDescription="Work" />
+                            android:contentDescription="@string/company" />
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -298,7 +298,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Job &amp; Company"
+                                android:text="@string/job_and_company"
                                 android:textSize="12sp"
                                 android:textColor="?android:textColorSecondary" />
                         </LinearLayout>
@@ -319,7 +319,7 @@
                             android:layout_height="22dp"
                             android:src="@drawable/ic_location"
                             app:tint="?attr/colorPrimary"
-                            android:contentDescription="Address" />
+                            android:contentDescription="@string/address" />
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -339,7 +339,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Address"
+                                android:text="@string/address"
                                 android:textSize="12sp"
                                 android:textColor="?android:textColorSecondary" />
                         </LinearLayout>
@@ -360,7 +360,7 @@
                             android:layout_height="22dp"
                             android:src="@drawable/ic_notes"
                             app:tint="?attr/colorPrimary"
-                            android:contentDescription="Notes" />
+                            android:contentDescription="@string/notes" />
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -380,7 +380,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Notes"
+                                android:text="@string/notes"
                                 android:textSize="12sp"
                                 android:textColor="?android:textColorSecondary" />
                         </LinearLayout>
@@ -399,7 +399,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="No additional details provided"
+                            android:text="@string/no_additional_details"
                             android:textSize="14sp"
                             android:textColor="?android:textColorSecondary" />
 
@@ -409,7 +409,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="Add Details"
+                            android:text="@string/add_details"
                             app:icon="@drawable/ic_edit" />
                     </LinearLayout>
 
@@ -429,7 +429,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="Groups"
+                    android:text="@string/groups"
                     android:textSize="14sp"
                     android:textStyle="bold"
                     android:textColor="?attr/colorPrimary" />

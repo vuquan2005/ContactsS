@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="8dp"
-                android:text="Appearance"
+                android:text="@string/appearance"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:textColor="?attr/colorPrimary" />
@@ -52,21 +52,21 @@
                         android:id="@+id/rb_system"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="System Default"
+                        android:text="@string/theme_system"
                         android:textSize="16sp" />
 
                     <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/rb_light"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Light"
+                        android:text="@string/theme_light"
                         android:textSize="16sp" />
 
                     <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/rb_dark"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Dark"
+                        android:text="@string/theme_dark"
                         android:textSize="16sp" />
                 </RadioGroup>
             </com.google.android.material.card.MaterialCardView>
@@ -76,7 +76,48 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="24dp"
-                android:text="About"
+                android:text="@string/language"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="?attr/colorPrimary" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="?attr/colorOutlineVariant">
+
+                <RadioGroup
+                    android:id="@+id/rg_language"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp">
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/rb_lang_vi"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lang_vietnamese"
+                        android:textSize="16sp" />
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/rb_lang_en"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lang_english"
+                        android:textSize="16sp" />
+                </RadioGroup>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/about"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:textColor="?attr/colorPrimary" />
@@ -99,7 +140,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="ContactVIP"
+                        android:text="@string/app_title_about"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -107,7 +148,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="Version 1.0.0"
+                        android:text="@string/version_name"
                         android:textColor="?android:textColorSecondary"
                         android:textSize="14sp" />
                 </LinearLayout>

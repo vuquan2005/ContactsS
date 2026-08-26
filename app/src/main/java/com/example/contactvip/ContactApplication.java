@@ -10,5 +10,9 @@ public class ContactApplication extends Application {
         super.onCreate();
         int mode = PreferenceUtils.getThemeMode(this);
         PreferenceUtils.applyTheme(mode);
+
+        String lang = PreferenceUtils.getLanguage(this);
+        PreferenceUtils.applyLanguage(lang);
     }
 }
+

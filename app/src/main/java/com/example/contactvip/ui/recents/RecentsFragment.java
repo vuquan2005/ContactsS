@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.contactvip.R;
 import com.example.contactvip.adapter.CallHistoryAdapter;
 import com.example.contactvip.data.entity.CallHistory;
 import com.example.contactvip.databinding.FragmentRecentsBinding;
@@ -62,8 +63,8 @@ public class RecentsFragment extends Fragment {
             public void onSwipeLeft(int position) {
                 CallHistory history = adapter.getCurrentList().get(position);
                 viewModel.delete(history);
-                Snackbar.make(binding.getRoot(), "Call history deleted", Snackbar.LENGTH_LONG)
-                        .setAction("UNDO", v -> viewModel.insert(history))
+                Snackbar.make(binding.getRoot(), R.string.call_history_deleted, Snackbar.LENGTH_LONG)
+                        .setAction(R.string.undo, v -> viewModel.insert(history))
                         .show();
             }
 
