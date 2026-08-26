@@ -102,18 +102,33 @@ public class RecentsFragment extends Fragment {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ContactSwipeCallback(getContext(), new ContactSwipeCallback.OnSwipeListener() {
             @Override
             public void onSwipeLeft(int position) {
-                CallHistory history = adapter.getCurrentList().get(position);
-                viewModel.delete(history);
-                Snackbar.make(binding.getRoot(), R.string.call_history_deleted, Snackbar.LENGTH_LONG)
-                        .setAction(R.string.undo, v -> viewModel.insert(history))
-                        .show();
+                if (position >= 0 && position < adapter.getCurrentList().size()) {
+                    CallHistory history = adapter.getCurrentList().get(position);
+                    viewModel.delete(history);
+                    
+                    if (binding != null && getActivity() != null) {
+                        View anchor = getActivity().findViewById(R.id.bottom_navigation);
+                        Snackbar snackbar = Snackbar.make(binding.getRoot(), R.string.call_history_deleted, Snackbar.LENGTH_LONG);
+                        if (anchor != null) {
+                            snackbar.setAnchorView(anchor);
+                        }
+                        snackbar.setAction(R.string.undo, v -> {
+                            if (viewModel != null) {
+                                viewModel.insert(history);
+                            }
+                        });
+                        snackbar.show();
+                    }
+                }
             }
 
             @Override
             public void onSwipeRight(int position) {
-                CallHistory history = adapter.getCurrentList().get(position);
-                CallUtils.makeCall(requireContext(), history.phoneNumber, history.contactName, history.contactId, history.avatarUri);
-                adapter.notifyItemChanged(position); // Reset swipe state
+                if (position >= 0 && position < adapter.getCurrentList().size()) {
+                    CallHistory history = adapter.getCurrentList().get(position);
+                    CallUtils.makeCall(requireContext(), history.phoneNumber, history.contactName, history.contactId, history.avatarUri);
+                    adapter.notifyItemChanged(position); // Reset swipe state
+                }
             }
         }));
         itemTouchHelper.attachToRecyclerView(binding.recyclerViewRecents);

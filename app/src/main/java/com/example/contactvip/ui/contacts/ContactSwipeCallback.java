@@ -42,10 +42,13 @@ public class ContactSwipeCallback extends ItemTouchHelper.SimpleCallback {
 
     @Override
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-        if (direction == ItemTouchHelper.LEFT) {
-            listener.onSwipeLeft(viewHolder.getAdapterPosition());
-        } else {
-            listener.onSwipeRight(viewHolder.getAdapterPosition());
+        int position = viewHolder.getAdapterPosition();
+        if (position != RecyclerView.NO_POSITION) {
+            if (direction == ItemTouchHelper.LEFT) {
+                listener.onSwipeLeft(position);
+            } else {
+                listener.onSwipeRight(position);
+            }
         }
     }
 

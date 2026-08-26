@@ -12,10 +12,10 @@ import java.util.List;
 
 @Dao
 public interface CallHistoryDao {
-    @Insert
+    @Insert(onConflict = androidx.room.OnConflictStrategy.REPLACE)
     void insert(CallHistory callHistory);
 
-    @Insert
+    @Insert(onConflict = androidx.room.OnConflictStrategy.REPLACE)
     void insertAll(List<CallHistory> callHistories);
 
     @androidx.room.Transaction

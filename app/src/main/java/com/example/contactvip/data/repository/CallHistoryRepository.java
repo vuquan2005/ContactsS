@@ -3,6 +3,8 @@ package com.example.contactvip.data.repository;
 import android.Manifest;
 import android.app.Application;
 import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -146,7 +148,40 @@ public class CallHistoryRepository {
     }
 
     public void insert(CallHistory callHistory) {
-        AppDatabase.databaseWriteExecutor.execute(() -> callHistoryDao.insert(callHistory));
+        AppDatabase.databaseWriteExecutor.execute(() -> {
+            if (ContextCompat.checkSelfPermission(application, Manifest.permission.WRITE_CALL_LOG) == PackageManager.PERMISSION_GRANTED) {
+                try {
+                    ContentResolver resolver = application.getContentResolver();
+                    ContentValues values = new ContentValues();
+                    values.put(CallLog.Calls.NUMBER, callHistory.phoneNumber != null ? callHistory.phoneNumber : "");
+                    values.put(CallLog.Calls.DATE, callHistory.timestamp > 0 ? callHistory.timestamp : System.currentTimeMillis());
+                    values.put(CallLog.Calls.DURATION, callHistory.duration);
+                    
+                    int typeInt = CallLog.Calls.INCOMING_TYPE;
+                    if ("OUTGOING".equalsIgnoreCase(callHistory.callType)) {
+                        typeInt = CallLog.Calls.OUTGOING_TYPE;
+                    } else if ("MISSED".equalsIgnoreCase(callHistory.callType)) {
+                        typeInt = CallLog.Calls.MISSED_TYPE;
+                    } else if ("REJECTED".equalsIgnoreCase(callHistory.callType)) {
+                        typeInt = CallLog.Calls.REJECTED_TYPE;
+                    }
+                    values.put(CallLog.Calls.TYPE, typeInt);
+                    values.put(CallLog.Calls.NEW, 1);
+                    if (callHistory.contactName != null && !callHistory.contactName.isEmpty()) {
+                        values.put(CallLog.Calls.CACHED_NAME, callHistory.contactName);
+                    }
+                    Uri newUri = resolver.insert(CallLog.Calls.CONTENT_URI, values);
+                    if (newUri != null) {
+                        try {
+                            callHistory.systemCallId = ContentUris.parseId(newUri);
+                        } catch (Exception ignored) {
+                        }
+                    }
+                } catch (Exception ignored) {
+                }
+            }
+            callHistoryDao.insert(callHistory);
+        });
     }
 
     public void deleteAll() {
