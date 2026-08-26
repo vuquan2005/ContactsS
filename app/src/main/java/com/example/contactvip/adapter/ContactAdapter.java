@@ -85,11 +85,13 @@ public class ContactAdapter extends ListAdapter<ContactDisplay, ContactAdapter.C
             if (item.primaryPhone != null && !item.primaryPhone.isEmpty()) {
                 binding.btnCall.setVisibility(android.view.View.VISIBLE);
                 binding.btnCall.setOnClickListener(v -> {
-                    android.content.Intent intent = new android.content.Intent(itemView.getContext(), com.example.contactvip.ui.call.CallActivity.class);
-                    intent.putExtra("PHONE_NUMBER", item.primaryPhone);
-                    intent.putExtra("CONTACT_NAME", item.getFullName());
-                    intent.putExtra("CONTACT_ID", item.contact.id);
-                    itemView.getContext().startActivity(intent);
+                    com.example.contactvip.utils.CallUtils.makeCall(
+                            itemView.getContext(),
+                            item.primaryPhone,
+                            item.getFullName(),
+                            item.contact.id,
+                            item.contact.avatarUri
+                    );
                 });
             } else {
                 binding.btnCall.setVisibility(android.view.View.GONE);

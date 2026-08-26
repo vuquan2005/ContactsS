@@ -17,8 +17,8 @@ import com.example.contactvip.R;
 import com.example.contactvip.adapter.CallHistoryAdapter;
 import com.example.contactvip.data.entity.CallHistory;
 import com.example.contactvip.databinding.FragmentRecentsBinding;
-import com.example.contactvip.ui.call.CallActivity;
 import com.example.contactvip.ui.contacts.ContactSwipeCallback;
+import com.example.contactvip.utils.CallUtils;
 import com.example.contactvip.viewmodel.CallHistoryViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -71,11 +71,7 @@ public class RecentsFragment extends Fragment {
             @Override
             public void onSwipeRight(int position) {
                 CallHistory history = adapter.getCurrentList().get(position);
-                Intent intent = new Intent(getContext(), CallActivity.class);
-                intent.putExtra("PHONE_NUMBER", history.phoneNumber);
-                intent.putExtra("CONTACT_NAME", history.contactName);
-                intent.putExtra("CONTACT_ID", history.contactId);
-                startActivity(intent);
+                CallUtils.makeCall(requireContext(), history.phoneNumber, history.contactName, history.contactId, history.avatarUri);
                 adapter.notifyItemChanged(position); // Reset swipe state
             }
         }));

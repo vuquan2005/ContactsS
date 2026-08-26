@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.contactvip.data.entity.Contact;
 import com.example.contactvip.data.entity.ContactDisplay;
 import com.example.contactvip.databinding.ActivityDialerBinding;
-import com.example.contactvip.ui.call.CallActivity;
+import com.example.contactvip.utils.CallUtils;
 import com.example.contactvip.viewmodel.ContactViewModel;
 
 public class DialerActivity extends AppCompatActivity {
@@ -47,13 +47,12 @@ public class DialerActivity extends AppCompatActivity {
 
         binding.btnCall.setOnClickListener(v -> {
             if (dialedNumber.length() > 0) {
-                Intent intent = new Intent(this, CallActivity.class);
-                intent.putExtra("PHONE_NUMBER", dialedNumber.toString());
+                String number = dialedNumber.toString();
                 if (foundContact != null) {
-                    intent.putExtra("CONTACT_NAME", foundContact.getFullName());
-                    intent.putExtra("CONTACT_ID", foundContact.id);
+                    CallUtils.makeCall(this, number, foundContact.getFullName(), foundContact.id, foundContact.avatarUri);
+                } else {
+                    CallUtils.makeCall(this, number);
                 }
-                startActivity(intent);
                 finish();
             }
         });

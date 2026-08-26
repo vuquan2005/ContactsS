@@ -20,7 +20,6 @@ import com.example.contactvip.data.entity.Contact;
 import com.example.contactvip.data.entity.ContactDisplay;
 import com.example.contactvip.data.entity.ContactGroup;
 import com.example.contactvip.databinding.FragmentContactsBinding;
-import com.example.contactvip.ui.call.CallActivity;
 import com.example.contactvip.viewmodel.ContactViewModel;
 
 public class ContactsFragment extends Fragment implements ContactAdapter.OnContactClickListener {

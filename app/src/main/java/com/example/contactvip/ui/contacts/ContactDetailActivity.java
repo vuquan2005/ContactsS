@@ -17,8 +17,8 @@ import com.example.contactvip.data.entity.ContactGroup;
 import com.example.contactvip.data.entity.ContactPhone;
 import com.example.contactvip.databinding.ActivityContactDetailBinding;
 import com.example.contactvip.databinding.ItemPhoneDetailBinding;
-import com.example.contactvip.ui.call.CallActivity;
 import com.example.contactvip.utils.AvatarUtils;
+import com.example.contactvip.utils.CallUtils;
 import com.example.contactvip.viewmodel.ContactViewModel;
 import com.google.android.material.chip.Chip;
 
@@ -231,12 +231,11 @@ public class ContactDetailActivity extends AppCompatActivity {
     }
 
     private void startCall(String number) {
-        if (currentContact == null) return;
-        Intent intent = new Intent(this, CallActivity.class);
-        intent.putExtra("PHONE_NUMBER", number);
-        intent.putExtra("CONTACT_NAME", currentContact.getFullName());
-        intent.putExtra("CONTACT_ID", currentContact.id);
-        startActivity(intent);
+        if (currentContact == null) {
+            CallUtils.makeCall(this, number);
+        } else {
+            CallUtils.makeCall(this, number, currentContact.getFullName(), currentContact.id, currentContact.avatarUri);
+        }
     }
 
     private void shareContact() {

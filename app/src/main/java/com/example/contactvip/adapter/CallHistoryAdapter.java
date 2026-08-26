@@ -71,11 +71,13 @@ public class CallHistoryAdapter extends ListAdapter<CallHistory, CallHistoryAdap
             }
 
             binding.btnCall.setOnClickListener(v -> {
-                android.content.Intent intent = new android.content.Intent(itemView.getContext(), com.example.contactvip.ui.call.CallActivity.class);
-                intent.putExtra("PHONE_NUMBER", callHistory.phoneNumber);
-                intent.putExtra("CONTACT_NAME", callHistory.contactName);
-                intent.putExtra("CONTACT_ID", callHistory.contactId);
-                itemView.getContext().startActivity(intent);
+                com.example.contactvip.utils.CallUtils.makeCall(
+                        itemView.getContext(),
+                        callHistory.phoneNumber,
+                        callHistory.contactName,
+                        callHistory.contactId,
+                        callHistory.avatarUri
+                );
             });
         }
     }
