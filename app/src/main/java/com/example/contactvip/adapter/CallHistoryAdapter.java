@@ -58,17 +58,22 @@ public class CallHistoryAdapter extends ListAdapter<CallHistory, CallHistoryAdap
 
         public void bind(CallHistory callHistory) {
             binding.tvCallerName.setText(callHistory.contactName != null ? callHistory.contactName : callHistory.phoneNumber);
-            binding.tvCallDetails.setText(callHistory.callType + " • " + callHistory.phoneNumber);
-            binding.tvTimestamp.setText(sdf.format(new Date(callHistory.timestamp)));
-            AvatarUtils.loadAvatar(itemView.getContext(), callHistory.avatarUri, binding.ivAvatar);
-
+            
+            String typeLabel;
             if ("INCOMING".equalsIgnoreCase(callHistory.callType)) {
+                typeLabel = itemView.getContext().getString(com.example.contactvip.R.string.incoming_call);
                 binding.ivCallType.setImageResource(com.example.contactvip.R.drawable.ic_call_incoming);
-            } else if ("MISSED".equalsIgnoreCase(callHistory.callType)) {
+            } else if ("MISSED".equalsIgnoreCase(callHistory.callType) || "REJECTED".equalsIgnoreCase(callHistory.callType)) {
+                typeLabel = itemView.getContext().getString(com.example.contactvip.R.string.missed_call);
                 binding.ivCallType.setImageResource(com.example.contactvip.R.drawable.ic_call_missed);
             } else {
+                typeLabel = itemView.getContext().getString(com.example.contactvip.R.string.outgoing_call);
                 binding.ivCallType.setImageResource(com.example.contactvip.R.drawable.ic_call_outgoing);
             }
+
+            binding.tvCallDetails.setText(typeLabel + " • " + callHistory.phoneNumber);
+            binding.tvTimestamp.setText(sdf.format(new Date(callHistory.timestamp)));
+            AvatarUtils.loadAvatar(itemView.getContext(), callHistory.avatarUri, binding.ivAvatar);
 
             binding.btnCall.setOnClickListener(v -> {
                 com.example.contactvip.utils.CallUtils.makeCall(

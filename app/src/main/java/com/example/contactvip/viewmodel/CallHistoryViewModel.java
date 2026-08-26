@@ -25,6 +25,10 @@ public class CallHistoryViewModel extends AndroidViewModel {
         return allCallHistory;
     }
 
+    public void syncSystemCallLogs() {
+        repository.syncSystemCallLogs();
+    }
+
     public void insert(CallHistory callHistory) {
         repository.insert(callHistory);
     }

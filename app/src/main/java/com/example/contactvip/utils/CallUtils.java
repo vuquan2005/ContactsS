@@ -26,21 +26,6 @@ public class CallUtils {
 
         String cleanNumber = phoneNumber.trim();
 
-        // Save call into history
-        new Thread(() -> {
-            try {
-                CallHistory history = new CallHistory();
-                history.phoneNumber = cleanNumber;
-                history.contactName = (contactName != null && !contactName.trim().isEmpty()) ? contactName.trim() : cleanNumber;
-                history.contactId = (contactId != null) ? contactId : -1;
-                history.callType = "OUTGOING";
-                history.timestamp = System.currentTimeMillis();
-                history.avatarUri = avatarUri;
-                AppDatabase.getDatabase(context.getApplicationContext()).callHistoryDao().insert(history);
-            } catch (Exception ignored) {
-            }
-        }).start();
-
         // Direct call using ACTION_CALL if permission is granted
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
             try {

@@ -46,4 +46,9 @@ public interface ContactDao {
            "INNER JOIN contact_phones ON contacts.id = contact_phones.contactId " +
            "WHERE contact_phones.phoneNumber = :phoneNumber LIMIT 1")
     Contact getContactByPhoneNumber(String phoneNumber);
+
+    @Query("SELECT DISTINCT contacts.*, (SELECT phoneNumber FROM contact_phones WHERE contactId = contacts.id ORDER BY isPrimary DESC, id ASC LIMIT 1) as primaryPhone FROM contacts " +
+           "LEFT JOIN contact_phones ON contacts.id = contact_phones.contactId " +
+           "WHERE contact_phones.phoneNumber LIKE :query LIMIT 1")
+    List<ContactDisplay> searchContactsSync(String query);
 }

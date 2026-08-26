@@ -69,9 +69,39 @@ public class MainActivity extends AppCompatActivity {
             binding.bottomNavigation.setSelectedItemId(R.id.navigation_contacts);
         }
 
-        // Request Phone Call permission if needed for direct system calling
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, 100);
+        // Request Phone Call and Call Log permissions
+        String[] requiredPermissions = new String[]{
+                Manifest.permission.CALL_PHONE,
+                Manifest.permission.READ_CALL_LOG,
+                Manifest.permission.WRITE_CALL_LOG
+        };
+
+        boolean needPermission = false;
+        for (String perm : requiredPermissions) {
+            if (ContextCompat.checkSelfPermission(this, perm) != PackageManager.PERMISSION_GRANTED) {
+                needPermission = true;
+                break;
+            }
+        }
+
+        if (needPermission) {
+            ActivityCompat.requestPermissions(this, requiredPermissions, 100);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CALL_LOG) == PackageManager.PERMISSION_GRANTED) {
+            new com.example.contactvip.data.repository.CallHistoryRepository(getApplication()).syncSystemCallLogs();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 100) {
+            new com.example.contactvip.data.repository.CallHistoryRepository(getApplication()).syncSystemCallLogs();
         }
     }
 

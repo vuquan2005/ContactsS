@@ -21,7 +21,7 @@ import com.example.contactvip.data.entity.ContactPhone;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Contact.class, CallHistory.class, ContactPhone.class, ContactGroup.class, ContactGroupCrossRef.class}, version = 5, exportSchema = false)
+@Database(entities = {Contact.class, CallHistory.class, ContactPhone.class, ContactGroup.class, ContactGroupCrossRef.class}, version = 6, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract ContactDao contactDao();
     public abstract CallHistoryDao callHistoryDao();

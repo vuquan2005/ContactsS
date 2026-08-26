@@ -15,6 +15,17 @@ public interface CallHistoryDao {
     @Insert
     void insert(CallHistory callHistory);
 
+    @Insert
+    void insertAll(List<CallHistory> callHistories);
+
+    @androidx.room.Transaction
+    default void replaceAll(List<CallHistory> callHistories) {
+        deleteAll();
+        if (callHistories != null && !callHistories.isEmpty()) {
+            insertAll(callHistories);
+        }
+    }
+
     @Query("SELECT * FROM call_history ORDER BY timestamp DESC")
     LiveData<List<CallHistory>> getAllCallHistory();
 

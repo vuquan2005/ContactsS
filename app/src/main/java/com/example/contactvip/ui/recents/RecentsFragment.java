@@ -1,13 +1,21 @@
 package com.example.contactvip.ui.recents;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.ContentObserver;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.provider.CallLog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -26,6 +34,7 @@ public class RecentsFragment extends Fragment {
     private FragmentRecentsBinding binding;
     private CallHistoryViewModel viewModel;
     private CallHistoryAdapter adapter;
+    private ContentObserver callLogObserver;
 
     @Nullable
     @Override
@@ -55,6 +64,38 @@ public class RecentsFragment extends Fragment {
                 adapter.submitList(calls);
             }
         });
+
+        // Register observer for real-time system call log updates
+        callLogObserver = new ContentObserver(new Handler(Looper.getMainLooper())) {
+            @Override
+            public void onChange(boolean selfChange, @Nullable Uri uri) {
+                super.onChange(selfChange, uri);
+                if (viewModel != null) {
+                    viewModel.syncSystemCallLogs();
+                }
+            }
+        };
+
+        try {
+            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_CALL_LOG) == PackageManager.PERMISSION_GRANTED) {
+                requireContext().getContentResolver().registerContentObserver(
+                        CallLog.Calls.CONTENT_URI,
+                        true,
+                        callLogObserver
+                );
+            }
+        } catch (Exception ignored) {
+        }
+
+        viewModel.syncSystemCallLogs();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (viewModel != null) {
+            viewModel.syncSystemCallLogs();
+        }
     }
 
     private void setupSwipe() {
@@ -81,6 +122,12 @@ public class RecentsFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        if (callLogObserver != null && getContext() != null) {
+            try {
+                requireContext().getContentResolver().unregisterContentObserver(callLogObserver);
+            } catch (Exception ignored) {
+            }
+        }
         binding = null;
     }
 }
