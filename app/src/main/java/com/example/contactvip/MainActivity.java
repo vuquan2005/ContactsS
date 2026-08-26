@@ -65,11 +65,13 @@ public class MainActivity extends AppCompatActivity {
             binding.bottomNavigation.setSelectedItemId(R.id.navigation_contacts);
         }
 
-        // Request Phone Call and Call Log permissions
+        // Request Phone Call, Call Log and Contacts permissions
         String[] requiredPermissions = new String[]{
                 Manifest.permission.CALL_PHONE,
                 Manifest.permission.READ_CALL_LOG,
-                Manifest.permission.WRITE_CALL_LOG
+                Manifest.permission.WRITE_CALL_LOG,
+                Manifest.permission.READ_CONTACTS,
+                Manifest.permission.WRITE_CONTACTS
         };
 
         boolean needPermission = false;
@@ -91,13 +93,21 @@ public class MainActivity extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CALL_LOG) == PackageManager.PERMISSION_GRANTED) {
             new com.example.contactvip.data.repository.CallHistoryRepository(getApplication()).syncSystemCallLogs();
         }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
+            new com.example.contactvip.data.repository.ContactRepository(getApplication()).syncSystemContacts();
+        }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 100) {
-            new com.example.contactvip.data.repository.CallHistoryRepository(getApplication()).syncSystemCallLogs();
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CALL_LOG) == PackageManager.PERMISSION_GRANTED) {
+                new com.example.contactvip.data.repository.CallHistoryRepository(getApplication()).syncSystemCallLogs();
+            }
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
+                new com.example.contactvip.data.repository.ContactRepository(getApplication()).syncSystemContacts();
+            }
         }
     }
 

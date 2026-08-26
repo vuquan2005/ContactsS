@@ -1,6 +1,7 @@
 package com.example.contactvip.data.repository;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 
@@ -17,17 +18,30 @@ import com.example.contactvip.data.entity.ContactPhone;
 import java.util.List;
 
 public class ContactRepository {
+    private final Application application;
+    private final AppDatabase db;
     private final ContactDao contactDao;
     private final ContactPhoneDao phoneDao;
     private final ContactGroupDao groupDao;
     private final LiveData<List<ContactDisplay>> allContacts;
 
     public ContactRepository(Application application) {
-        AppDatabase db = AppDatabase.getDatabase(application);
-        contactDao = db.contactDao();
-        phoneDao = db.contactPhoneDao();
-        groupDao = db.contactGroupDao();
-        allContacts = contactDao.getAllContacts();
+        this.application = application;
+        this.db = AppDatabase.getDatabase(application);
+        this.contactDao = db.contactDao();
+        this.phoneDao = db.contactPhoneDao();
+        this.groupDao = db.contactGroupDao();
+        this.allContacts = contactDao.getAllContacts();
+
+        // Tự động lắng nghe thay đổi từ Danh bạ Hệ thống (Google, SIM...)
+        SystemContactsSyncManager.registerObserver(application, this::syncSystemContacts);
+    }
+
+    public void syncSystemContacts() {
+        SystemContactsSyncManager.registerObserver(application, this::syncSystemContacts);
+        AppDatabase.databaseWriteExecutor.execute(() -> {
+            SystemContactsSyncManager.syncAllFromSystem(application, db);
+        });
     }
 
     public LiveData<List<ContactDisplay>> getAllContacts() {
@@ -43,18 +57,82 @@ public class ContactRepository {
     }
 
     public void insert(Contact contact) {
-        AppDatabase.databaseWriteExecutor.execute(() -> contactDao.insert(contact));
+        AppDatabase.databaseWriteExecutor.execute(() -> {
+            long id = contactDao.insert(contact);
+            contact.id = id;
+            List<ContactPhone> phones = phoneDao.getPhonesByContactId(id);
+            SystemContactsSyncManager.saveContactToSystem(application, contact, phones);
+            if (contact.systemContactId != null && contact.systemContactId > 0) {
+                contactDao.update(contact);
+            }
+        });
     }
 
     public void update(Contact contact) {
-        AppDatabase.databaseWriteExecutor.execute(() -> contactDao.update(contact));
+        AppDatabase.databaseWriteExecutor.execute(() -> {
+            contactDao.update(contact);
+            List<ContactPhone> phones = phoneDao.getPhonesByContactId(contact.id);
+            SystemContactsSyncManager.saveContactToSystem(application, contact, phones);
+        });
     }
 
     public void delete(Contact contact) {
         AppDatabase.databaseWriteExecutor.execute(() -> {
+            if (contact.systemContactId != null && contact.systemContactId > 0) {
+                SystemContactsSyncManager.deleteContactFromSystem(application, contact.systemContactId);
+            }
             phoneDao.deletePhonesByContactId(contact.id);
             groupDao.deleteCrossRefsByContactId(contact.id);
             contactDao.delete(contact);
+        });
+    }
+
+    public void setFavorite(Contact contact, boolean isFavorite) {
+        contact.isFavorite = isFavorite;
+        contact.updatedAt = System.currentTimeMillis();
+        AppDatabase.databaseWriteExecutor.execute(() -> {
+            contactDao.update(contact);
+            if (contact.systemContactId != null && contact.systemContactId > 0) {
+                SystemContactsSyncManager.setStarredInSystem(application, contact.systemContactId, isFavorite);
+            }
+        });
+    }
+
+    public void saveContactWithPhones(Contact contact, List<ContactPhone> phones, List<Long> groupIds, Runnable onComplete) {
+        AppDatabase.databaseWriteExecutor.execute(() -> {
+            long cid;
+            if (contact.id == 0) {
+                cid = contactDao.insert(contact);
+                contact.id = cid;
+            } else {
+                cid = contact.id;
+                contactDao.update(contact);
+                phoneDao.deletePhonesByContactId(cid);
+                groupDao.deleteCrossRefsByContactId(cid);
+            }
+
+            for (ContactPhone p : phones) {
+                p.contactId = cid;
+            }
+            if (!phones.isEmpty()) {
+                phoneDao.insertAll(phones);
+            }
+
+            if (groupIds != null) {
+                for (Long gid : groupIds) {
+                    groupDao.insertContactGroupCrossRef(new ContactGroupCrossRef(cid, gid));
+                }
+            }
+
+            // Đồng bộ lên hệ thống
+            SystemContactsSyncManager.saveContactToSystem(application, contact, phones);
+            if (contact.systemContactId != null && contact.systemContactId > 0) {
+                contactDao.update(contact);
+            }
+
+            if (onComplete != null) {
+                onComplete.run();
+            }
         });
     }
 

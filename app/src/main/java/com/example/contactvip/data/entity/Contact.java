@@ -7,6 +7,14 @@ import androidx.room.PrimaryKey;
 public class Contact {
     @PrimaryKey(autoGenerate = true)
     public long id;
+
+    // System Synchronization Identifiers
+    public Long systemContactId;
+    public String lookupKey;
+    public String accountType;
+    public String accountName;
+    public long version;
+
     public String name;
     public String email;
     public String company;
@@ -19,6 +27,6 @@ public class Contact {
     public long updatedAt;
 
     public String getFullName() {
-        return (name != null) ? name : "";
+        return (name != null && !name.trim().isEmpty()) ? name : "No Name";
     }
 }

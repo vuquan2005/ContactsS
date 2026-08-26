@@ -300,9 +300,10 @@ public class ContactDetailActivity extends AppCompatActivity {
 
     private void toggleFavorite() {
         if (currentContact == null) return;
-        currentContact.isFavorite = !currentContact.isFavorite;
+        boolean newFav = !currentContact.isFavorite;
+        currentContact.isFavorite = newFav;
         currentContact.updatedAt = System.currentTimeMillis();
-        viewModel.update(currentContact);
+        viewModel.setFavorite(currentContact, newFav);
         displayContact(currentContact);
     }
 

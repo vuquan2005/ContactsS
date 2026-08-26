@@ -117,6 +117,18 @@ public class ContactViewModel extends AndroidViewModel {
         repository.delete(contact);
     }
 
+    public void setFavorite(Contact contact, boolean isFavorite) {
+        repository.setFavorite(contact, isFavorite);
+    }
+
+    public void syncSystemContacts() {
+        repository.syncSystemContacts();
+    }
+
+    public void saveContactWithPhones(Contact contact, List<ContactPhone> phones, List<Long> groupIds, Runnable onComplete) {
+        repository.saveContactWithPhones(contact, phones, groupIds, onComplete);
+    }
+
     public Contact getContactByPhoneNumber(String phoneNumber) {
         return repository.getContactByPhoneNumber(phoneNumber);
     }

@@ -19,6 +19,7 @@ public class ContactPhone {
     @PrimaryKey(autoGenerate = true)
     public long id;
     public long contactId;
+    public Long systemDataId;
     public String phoneNumber;
     public String label; // Mobile, Home, Work, Other
     public boolean isPrimary;

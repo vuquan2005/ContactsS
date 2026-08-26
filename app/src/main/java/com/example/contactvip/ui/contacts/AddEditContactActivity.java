@@ -218,15 +218,18 @@ public class AddEditContactActivity extends AppCompatActivity {
 
         if (hasError) return;
 
-        // Note: phone check skipped for brevity or handled by catching duplicate in list
         proceedToSave(name, email, phonesToSave);
     }
 
     private void proceedToSave(String name, String email, List<ContactPhone> phones) {
-        // Tạo đối tượng sạch để tránh lỗi bộ nhớ đệm của Room/DiffUtil
         Contact contact = new Contact();
         if (existingContact != null) {
             contact.id = existingContact.id;
+            contact.systemContactId = existingContact.systemContactId;
+            contact.lookupKey = existingContact.lookupKey;
+            contact.accountType = existingContact.accountType;
+            contact.accountName = existingContact.accountName;
+            contact.version = existingContact.version;
             contact.createdAt = existingContact.createdAt;
             contact.isFavorite = existingContact.isFavorite;
         } else {
@@ -240,34 +243,15 @@ public class AddEditContactActivity extends AppCompatActivity {
         contact.address = binding.etAddress.getText().toString().trim();
         contact.notes = binding.etNotes.getText().toString().trim();
         contact.avatarUri = currentAvatarUri;
-        contact.updatedAt = System.currentTimeMillis(); // Refresh UI trigger chính
+        contact.updatedAt = System.currentTimeMillis();
 
-        new Thread(() -> {
-            long cid;
-            if (existingContact == null) {
-                cid = viewModel.getRepository().getContactDao().insert(contact);
-            } else {
-                cid = contact.id;
-                viewModel.update(contact);
-                viewModel.deletePhonesForContact(cid);
-                viewModel.getRepository().getGroupDao().deleteCrossRefsByContactId(cid);
-            }
-
-            for (ContactPhone p : phones) {
-                p.contactId = cid;
-                viewModel.insertPhone(p);
-            }
-
-            for (Long gid : selectedGroupIds) {
-                viewModel.addContactToGroup(cid, gid);
-            }
-
+        viewModel.saveContactWithPhones(contact, phones, new ArrayList<>(selectedGroupIds), () -> {
             runOnUiThread(() -> {
                 hideKeyboard();
                 Toast.makeText(this, R.string.contact_saved, Toast.LENGTH_SHORT).show();
                 finish();
             });
-        }).start();
+        });
     }
 
     private void hideKeyboard() {

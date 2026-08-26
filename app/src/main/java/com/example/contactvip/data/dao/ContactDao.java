@@ -51,4 +51,22 @@ public interface ContactDao {
            "LEFT JOIN contact_phones ON contacts.id = contact_phones.contactId " +
            "WHERE contact_phones.phoneNumber LIKE :query LIMIT 1")
     List<ContactDisplay> searchContactsSync(String query);
+
+    @Query("SELECT * FROM contacts WHERE systemContactId = :systemContactId LIMIT 1")
+    Contact getContactBySystemId(long systemContactId);
+
+    @Query("SELECT * FROM contacts WHERE lookupKey = :lookupKey LIMIT 1")
+    Contact getContactByLookupKey(String lookupKey);
+
+    @Query("SELECT systemContactId FROM contacts WHERE systemContactId IS NOT NULL")
+    List<Long> getAllSystemContactIds();
+
+    @Query("DELETE FROM contacts WHERE systemContactId = :systemContactId")
+    void deleteBySystemContactId(long systemContactId);
+
+    @Query("SELECT * FROM contacts WHERE id = :id LIMIT 1")
+    Contact getContactByIdSync(long id);
+
+    @Query("UPDATE contacts SET isFavorite = :isFavorite, updatedAt = :updatedAt WHERE systemContactId = :systemContactId")
+    void updateFavoriteBySystemId(long systemContactId, boolean isFavorite, long updatedAt);
 }

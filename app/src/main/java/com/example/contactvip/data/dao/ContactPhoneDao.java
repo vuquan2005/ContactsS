@@ -15,6 +15,9 @@ public interface ContactPhoneDao {
     @Insert
     void insert(ContactPhone contactPhone);
 
+    @Insert
+    void insertAll(List<ContactPhone> contactPhones);
+
     @Update
     void update(ContactPhone contactPhone);
 
