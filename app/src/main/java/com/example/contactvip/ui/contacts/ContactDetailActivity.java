@@ -17,6 +17,7 @@ import com.example.contactvip.data.entity.ContactGroup;
 import com.example.contactvip.data.entity.ContactPhone;
 import com.example.contactvip.databinding.ActivityContactDetailBinding;
 import com.example.contactvip.databinding.ItemPhoneDetailBinding;
+import com.example.contactvip.utils.AccountUtils;
 import com.example.contactvip.utils.AvatarUtils;
 import com.example.contactvip.utils.CallUtils;
 import com.example.contactvip.viewmodel.ContactViewModel;
@@ -96,6 +97,12 @@ public class ContactDetailActivity extends AppCompatActivity {
         }
 
         AvatarUtils.loadAvatar(this, contact.avatarUri, binding.ivAvatar);
+
+        // Storage Account Badge & Info Row
+        String storageDisplay = AccountUtils.formatAccountDisplay(contact.accountType, contact.accountName);
+        String shortBadge = AccountUtils.getShortAccountBadge(contact.accountType, contact.accountName);
+        binding.chipStorageAccount.setText(shortBadge);
+        binding.tvStorageAccount.setText(storageDisplay);
 
         // Subtitle / Headline (Job Title & Company)
         String company = contact.company != null ? contact.company.trim() : "";

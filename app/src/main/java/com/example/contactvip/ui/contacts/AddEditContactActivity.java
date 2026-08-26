@@ -23,6 +23,7 @@ import com.example.contactvip.data.entity.ContactGroup;
 import com.example.contactvip.data.entity.ContactPhone;
 import com.example.contactvip.databinding.ActivityAddEditContactBinding;
 import com.example.contactvip.databinding.ItemPhoneInputBinding;
+import com.example.contactvip.utils.AccountUtils;
 import com.example.contactvip.utils.AvatarUtils;
 import com.example.contactvip.viewmodel.ContactViewModel;
 import com.google.android.material.chip.Chip;
@@ -31,6 +32,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 public class AddEditContactActivity extends AppCompatActivity {
@@ -40,6 +42,9 @@ public class AddEditContactActivity extends AppCompatActivity {
     private String currentAvatarUri = null;
     private List<ItemPhoneInputBinding> phoneBindings = new ArrayList<>();
     private Set<Long> selectedGroupIds = new HashSet<>();
+
+    private List<AccountUtils.AccountItem> availableAccounts = new ArrayList<>();
+    private AccountUtils.AccountItem selectedAccount = null;
 
     private final ActivityResultLauncher<PickVisualMediaRequest> pickImageLauncher = registerForActivityResult(
             new ActivityResultContracts.PickVisualMedia(),
@@ -69,6 +74,8 @@ public class AddEditContactActivity extends AppCompatActivity {
         });
 
         viewModel = new ViewModelProvider(this).get(ContactViewModel.class);
+
+        setupAccountPicker();
 
         long contactId = getIntent().getLongExtra("CONTACT_ID", -1);
         if (contactId != -1) {
@@ -102,6 +109,25 @@ public class AddEditContactActivity extends AppCompatActivity {
         binding.btnAddPhone.setOnClickListener(v -> addPhoneField("", false));
         binding.btnCreateGroup.setOnClickListener(v -> showCreateGroupDialog());
         binding.btnSave.setOnClickListener(v -> saveContact());
+    }
+
+    private void setupAccountPicker() {
+        availableAccounts = AccountUtils.getAvailableAccounts(this);
+        ArrayAdapter<AccountUtils.AccountItem> adapter = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_dropdown_item_1line,
+                availableAccounts
+        );
+        binding.actvStorageAccount.setAdapter(adapter);
+
+        if (!availableAccounts.isEmpty()) {
+            selectedAccount = availableAccounts.get(0);
+            binding.actvStorageAccount.setText(selectedAccount.displayName, false);
+        }
+
+        binding.actvStorageAccount.setOnItemClickListener((parent, view, position, id) -> {
+            selectedAccount = availableAccounts.get(position);
+        });
     }
 
     private void addPhoneField(String number, boolean isPrimary) {
@@ -163,6 +189,29 @@ public class AddEditContactActivity extends AppCompatActivity {
         // Gán lại URI hiện tại để nếu không đổi ảnh thì vẫn giữ được ảnh cũ
         this.currentAvatarUri = contact.avatarUri;
         AvatarUtils.loadAvatar(this, contact.avatarUri, binding.ivAvatar);
+
+        // Khớp vị trí lưu
+        if (contact.accountType != null || contact.accountName != null) {
+            boolean matched = false;
+            for (AccountUtils.AccountItem item : availableAccounts) {
+                if (Objects.equals(item.accountType, contact.accountType) &&
+                    Objects.equals(item.accountName, contact.accountName)) {
+                    selectedAccount = item;
+                    binding.actvStorageAccount.setText(item.displayName, false);
+                    matched = true;
+                    break;
+                }
+            }
+            if (!matched) {
+                String display = AccountUtils.formatAccountDisplay(contact.accountType, contact.accountName);
+                AccountUtils.AccountItem customItem = new AccountUtils.AccountItem(
+                        display, contact.accountType, contact.accountName, R.drawable.ic_cloud
+                );
+                availableAccounts.add(customItem);
+                selectedAccount = customItem;
+                binding.actvStorageAccount.setText(display, false);
+            }
+        }
         
         // Load Phones
         new Thread(() -> {
@@ -227,13 +276,20 @@ public class AddEditContactActivity extends AppCompatActivity {
             contact.id = existingContact.id;
             contact.systemContactId = existingContact.systemContactId;
             contact.lookupKey = existingContact.lookupKey;
-            contact.accountType = existingContact.accountType;
-            contact.accountName = existingContact.accountName;
             contact.version = existingContact.version;
             contact.createdAt = existingContact.createdAt;
             contact.isFavorite = existingContact.isFavorite;
         } else {
             contact.createdAt = System.currentTimeMillis();
+        }
+
+        // Gán vị trí lưu đã chọn
+        if (selectedAccount != null) {
+            contact.accountType = selectedAccount.accountType;
+            contact.accountName = selectedAccount.accountName;
+        } else {
+            contact.accountType = null;
+            contact.accountName = null;
         }
         
         contact.name = name;

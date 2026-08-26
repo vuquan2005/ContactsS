@@ -101,6 +101,8 @@
     <string name="end_call">End Call</string>
     <string name="call_history_deleted">Call history deleted</string>
     <string name="undo">Undo</string>
+    <string name="save_to">Save to</string>
+    <string name="storage_location">Storage Location</string>
     <string name="back">Back</string>
 </resources>
 

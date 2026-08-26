@@ -66,6 +66,17 @@
                 android:gravity="center"
                 tools:text="Software Engineer • Google" />
 
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_storage_account"
+                style="@style/Widget.Material3.Chip.Assist.Elevated"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                app:chipIcon="@drawable/ic_cloud"
+                app:chipIconSize="16dp"
+                android:textSize="12sp"
+                tools:text="Google: user@gmail.com" />
+
             <!-- Quick Action Row -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
@@ -221,6 +232,46 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="16dp">
+
+                    <!-- Storage Account -->
+                    <LinearLayout
+                        android:id="@+id/layout_storage_account"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:paddingVertical="8dp">
+
+                        <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:src="@drawable/ic_cloud"
+                            app:tint="?attr/colorPrimary"
+                            android:contentDescription="@string/storage_location" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginStart="14dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_storage_account"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="15sp"
+                                android:textColor="?attr/colorOnSurface"
+                                tools:text="Google (user@gmail.com)" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/storage_location"
+                                android:textSize="12sp"
+                                android:textColor="?android:textColorSecondary" />
+                        </LinearLayout>
+                    </LinearLayout>
 
                     <!-- Email -->
                     <LinearLayout
