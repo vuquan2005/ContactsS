@@ -21,7 +21,7 @@ import com.example.contactvip.data.entity.ContactPhone;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Contact.class, CallHistory.class, ContactPhone.class, ContactGroup.class, ContactGroupCrossRef.class}, version = 4, exportSchema = false)
+@Database(entities = {Contact.class, CallHistory.class, ContactPhone.class, ContactGroup.class, ContactGroupCrossRef.class}, version = 5, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract ContactDao contactDao();
     public abstract CallHistoryDao callHistoryDao();
@@ -39,37 +39,11 @@ public abstract class AppDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                                     AppDatabase.class, "phone_contacts_db")
-                            .fallbackToDestructiveMigration() // Xóa sạch bảng cũ, tạo bảng mới theo schema gọn nhất
-                            .addCallback(sRoomDatabaseCallback)
+                            .fallbackToDestructiveMigration()
                             .build();
                 }
             }
         }
         return INSTANCE;
     }
-
-    private static final RoomDatabase.Callback sRoomDatabaseCallback = new RoomDatabase.Callback() {
-        @Override
-        public void onCreate(@NonNull SupportSQLiteDatabase db) {
-            super.onCreate(db);
-            databaseWriteExecutor.execute(() -> {
-                ContactDao dao = INSTANCE.contactDao();
-                ContactPhoneDao pDao = INSTANCE.contactPhoneDao();
-                
-                Contact c1 = new Contact();
-                c1.name = "Nguyễn Văn An";
-                c1.isFavorite = true;
-                c1.createdAt = System.currentTimeMillis();
-                long id1 = dao.insert(c1);
-                pDao.insert(new ContactPhone(id1, "0987654321", "Mobile", true));
-
-                Contact c2 = new Contact();
-                c2.name = "Trần Minh Đức";
-                c2.isFavorite = true;
-                c2.createdAt = System.currentTimeMillis();
-                long id2 = dao.insert(c2);
-                pDao.insert(new ContactPhone(id2, "0912345678", "Mobile", true));
-            });
-        }
-    };
 }
